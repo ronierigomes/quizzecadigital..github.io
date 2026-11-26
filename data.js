@@ -569,11 +569,13 @@ const TAROT_SVGS = {
         src="https://actbr.org.br/wp-content/uploads/2026/11/OBECA.png"
         alt="OBECA — Observatório do ECA Digital"
         class="partner-logo-img partner-logo-obeca"
+        referrerpolicy="no-referrer"
       />
       <img
         src="https://actbr.org.br/wp-content/uploads/2026/11/INTERVOZES.png"
         alt="Intervozes"
         class="partner-logo-img partner-logo-intervozes"
+        referrerpolicy="no-referrer"
       />
     </div>
   `
