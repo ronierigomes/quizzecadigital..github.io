@@ -290,6 +290,35 @@ body {
   color: var(--ink);
 }
 
+.logo-heading {
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+}
+
+.brand-logo {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.brand-logo-vertical {
+  width: min(240px, 74%);
+  margin: 2px auto 0;
+}
+
+.brand-logo-horizontal {
+  width: min(250px, 80%);
+  margin: 0 auto;
+}
+
+.result-brand-row {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 6px;
+}
+
 .motif-wrap {
   margin: 14px auto 0;
   max-width: 220px;
@@ -796,72 +825,33 @@ body {
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 14px 20px;
+  gap: 14px 24px;
   margin-top: 6px;
 }
 
-.partner-obeca,
-.partner-intervozes {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  color: var(--periwinkle);
+.partner-logo-img {
+  display: block;
+  height: 36px;
+  width: auto;
+  max-width: 44%;
+  object-fit: contain;
 }
 
-.partner-obeca svg {
-  width: 30px;
-  height: 30px;
-  flex-shrink: 0;
-}
-
-.obeca-wordmark {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  line-height: 1.05;
-}
-
-.obeca-wordmark strong {
-  font-size: 0.98rem;
-  letter-spacing: 0.04em;
-  font-weight: 800;
-}
-
-.obeca-wordmark span {
-  font-size: 0.56rem;
-  font-weight: 600;
-}
-
-.partner-intervozes svg {
-  width: 34px;
-  height: 26px;
-  flex-shrink: 0;
-}
-
-.intervozes-wordmark {
-  font-size: 0.98rem;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-}
-
-/* Contraste dos logos sobre o fundo roxo escuro da capa/resultado */
+/* Contraste dos logos oficiais sobre o fundo roxo escuro da capa/resultado */
 .start-logos {
   margin-top: 18px;
-  padding-top: 14px;
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 10px 14px;
+  background: var(--pink-soft);
+  border: 2px solid var(--ink);
+  border-radius: 12px;
 }
 
-.start-logos .partner-obeca,
-.start-logos .partner-intervozes {
-  color: rgba(255, 255, 255, 0.85);
+.start-logos .partner-logos {
+  margin-top: 0;
 }
 
-.start-logos svg [stroke="#7A74B8"] {
-  stroke: rgba(255, 255, 255, 0.85);
-}
-
-.start-logos svg [fill="#7A74B8"] {
-  fill: rgba(255, 255, 255, 0.85);
+.start-logos .partner-logo-img {
+  height: 32px;
 }
 
 /* ==================== TELA FINAL / RESULTADO ==================== */

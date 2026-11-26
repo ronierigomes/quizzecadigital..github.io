@@ -562,35 +562,19 @@ const TAROT_SVGS = {
     </svg>
   `,
 
-  // Logos OBECA & Intervozes para o rodapé das cartas de resposta
+  // Logos oficiais OBECA & Intervozes para o rodapé
   footerLogos: `
     <div class="partner-logos" aria-label="OBECA Observatório do ECA Digital e Intervozes">
-      <div class="partner-obeca">
-        <svg viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <circle cx="21" cy="21" r="18" stroke="#7A74B8" stroke-width="2.2"/>
-          <circle cx="21" cy="21" r="12" stroke="#7A74B8" stroke-width="1.6" stroke-dasharray="3 2"/>
-          <circle cx="21" cy="18" r="4" fill="#7A74B8"/>
-          <path d="M14 31 C14 25.5, 28 25.5, 28 31" fill="#7A74B8"/>
-          <circle cx="21" cy="3" r="2.2" fill="#7A74B8"/>
-          <circle cx="37" cy="15" r="2.2" fill="#7A74B8"/>
-          <circle cx="5" cy="15" r="2.2" fill="#7A74B8"/>
-        </svg>
-        <div class="obeca-wordmark">
-          <strong>OBECA</strong>
-          <span>Observatório do ECA Digital</span>
-        </div>
-      </div>
-      <div class="partner-intervozes">
-        <svg viewBox="0 0 48 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M15 8 C8 13, 8 23, 15 28" stroke="#7A74B8" stroke-width="2.4" stroke-linecap="round"/>
-          <path d="M11 4 C2 11, 2 25, 11 32" stroke="#7A74B8" stroke-width="2.2" stroke-linecap="round"/>
-          <path d="M33 8 C40 13, 40 23, 33 28" stroke="#7A74B8" stroke-width="2.4" stroke-linecap="round"/>
-          <path d="M37 4 C46 11, 46 25, 37 32" stroke="#7A74B8" stroke-width="2.2" stroke-linecap="round"/>
-          <circle cx="21" cy="18" r="4.5" stroke="#7A74B8" stroke-width="2.2"/>
-          <circle cx="27" cy="18" r="4.5" stroke="#7A74B8" stroke-width="2.2"/>
-        </svg>
-        <span class="intervozes-wordmark">intervozes</span>
-      </div>
+      <img
+        src="https://actbr.org.br/wp-content/uploads/2026/11/OBECA.png"
+        alt="OBECA — Observatório do ECA Digital"
+        class="partner-logo-img partner-logo-obeca"
+      />
+      <img
+        src="https://actbr.org.br/wp-content/uploads/2026/11/INTERVOZES.png"
+        alt="Intervozes"
+        class="partner-logo-img partner-logo-intervozes"
+      />
     </div>
   `
 };

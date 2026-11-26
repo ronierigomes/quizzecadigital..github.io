@@ -20,7 +20,6 @@
   };
 
   const els = {
-    startEmblem: document.getElementById("start-emblem"),
     startIllustration: document.getElementById("start-illustration"),
     startLogos: document.getElementById("start-logos"),
     btnStart: document.getElementById("btn-start"),
@@ -29,7 +28,6 @@
     liveHits: document.getElementById("live-hits"),
     liveMisses: document.getElementById("live-misses"),
     progressDots: document.getElementById("progress-dots"),
-    questionEmblem: document.getElementById("question-emblem"),
     questionIllustration: document.getElementById("question-illustration"),
     questionText: document.getElementById("question-text"),
     optionsList: document.getElementById("options-list"),
@@ -46,7 +44,6 @@
     btnNext: document.getElementById("btn-next"),
     btnNextLabel: document.getElementById("btn-next-label"),
 
-    resultEmblem: document.getElementById("result-emblem"),
     resultHeadline: document.getElementById("result-heading"),
     resultSummary: document.getElementById("result-summary"),
     finalHits: document.getElementById("final-hits"),
@@ -175,16 +172,28 @@
   }
 
   // ==================== FLUXO DO QUIZ ====================
+  let canvasLogoImg = null;
+
+  function preloadCanvasLogo() {
+    const img = new Image();
+    img.crossOrigin = "anonymous";
+    img.onload = () => {
+      canvasLogoImg = img;
+    };
+    img.onerror = () => {
+      canvasLogoImg = null;
+    };
+    img.src = "https://actbr.org.br/wp-content/uploads/2026/11/LOGO-VERTICAL.png";
+  }
+
   function initStaticArt() {
-    els.startEmblem.innerHTML = TAROT_SVGS.archEmblem;
     els.startIllustration.innerHTML = TAROT_SVGS.botanicals;
     els.startLogos.innerHTML = TAROT_SVGS.footerLogos;
 
-    els.questionEmblem.innerHTML = TAROT_SVGS.archEmblem;
     els.answerLogos.innerHTML = TAROT_SVGS.footerLogos;
 
-    els.resultEmblem.innerHTML = TAROT_SVGS.archEmblem;
     els.resultLogos.innerHTML = TAROT_SVGS.footerLogos;
+    preloadCanvasLogo();
   }
 
   function startQuiz() {
@@ -462,36 +471,46 @@
     drawStar4(ctx, 840, 430, 22, "#FAF054");
     drawStar4(ctx, 210, 820, 28, "#FAF054");
 
-    // Arco estilizado no topo
-    ctx.strokeStyle = "#5B4490";
-    ctx.lineWidth = 6;
-    roundRect(ctx, W / 2 - 90, 165, 180, 230, 90);
-    ctx.stroke();
-    ctx.lineWidth = 4;
-    roundRect(ctx, W / 2 - 76, 179, 152, 202, 76);
-    ctx.stroke();
-    // Celular simplificado no arco
-    ctx.save();
-    ctx.translate(W / 2, 275);
-    ctx.rotate(0.1);
-    ctx.fillStyle = "#FDFAD2";
-    ctx.strokeStyle = "#5B4490";
-    ctx.lineWidth = 5;
-    roundRect(ctx, -32, -56, 64, 112, 12);
-    ctx.fill();
-    ctx.stroke();
-    ctx.restore();
+    // Logo oficial vertical no topo (com fallback vetorial se CORS bloquear)
+    if (canvasLogoImg && canvasLogoImg.naturalWidth > 0) {
+      const maxLogoW = 540;
+      const maxLogoH = 540;
+      const ratio = Math.min(maxLogoW / canvasLogoImg.naturalWidth, maxLogoH / canvasLogoImg.naturalHeight);
+      const drawW = canvasLogoImg.naturalWidth * ratio;
+      const drawH = canvasLogoImg.naturalHeight * ratio;
+      ctx.drawImage(canvasLogoImg, (W - drawW) / 2, 160 + (maxLogoH - drawH) / 2, drawW, drawH);
+    } else {
+      // Fallback: arco estilizado + tipografia
+      ctx.strokeStyle = "#5B4490";
+      ctx.lineWidth = 6;
+      roundRect(ctx, W / 2 - 90, 165, 180, 230, 90);
+      ctx.stroke();
+      ctx.lineWidth = 4;
+      roundRect(ctx, W / 2 - 76, 179, 152, 202, 76);
+      ctx.stroke();
+      ctx.save();
+      ctx.translate(W / 2, 275);
+      ctx.rotate(0.1);
+      ctx.fillStyle = "#FDFAD2";
+      ctx.strokeStyle = "#5B4490";
+      ctx.lineWidth = 5;
+      roundRect(ctx, -32, -56, 64, 112, 12);
+      ctx.fill();
+      ctx.stroke();
+      ctx.restore();
 
-    // Logo QUIZ ECA DIGITAL
+      ctx.textAlign = "center";
+      ctx.fillStyle = "#5B4490";
+      ctx.font = 'bold 88px "Alfa Slab One", Georgia, serif';
+      ctx.fillText("QUIZ ECA", W / 2, 520);
+      ctx.fillText("DIGITAL", W / 2, 612);
+
+      ctx.fillStyle = "#251C4D";
+      ctx.font = 'bold 44px "Lora", Georgia, serif';
+      ctx.fillText("O que muda pra você?", W / 2, 684);
+    }
+
     ctx.textAlign = "center";
-    ctx.fillStyle = "#5B4490";
-    ctx.font = 'bold 88px "Alfa Slab One", Georgia, serif';
-    ctx.fillText("QUIZ ECA", W / 2, 520);
-    ctx.fillText("DIGITAL", W / 2, 612);
-
-    ctx.fillStyle = "#251C4D";
-    ctx.font = 'bold 44px "Lora", Georgia, serif';
-    ctx.fillText("O que muda pra você?", W / 2, 684);
 
     // Caixas de Acertos e Erros
     const boxW = 340;
