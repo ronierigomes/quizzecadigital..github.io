@@ -2,8 +2,10 @@
   "use strict";
 
   const LETTERS = ["A", "B", "C"];
+  const STORAGE_KEY = "quiz_eca_digital_last_shuffle_v1";
 
   const state = {
+    questions: [],
     currentIndex: 0,
     hits: 0,
     misses: 0,
@@ -196,7 +198,92 @@
     preloadCanvasLogo();
   }
 
+  function loadLastShuffle() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      return raw ? JSON.parse(raw) : null;
+    } catch {
+      return null;
+    }
+  }
+
+  function saveLastShuffle(data) {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    } catch {
+      // ignora se storage estiver bloqueado
+    }
+  }
+
+  function shuffleQuestionsAvoidingLast(items, lastOrder) {
+    let shuffled = shuffle(items);
+    if (items.length > 1 && Array.isArray(lastOrder) && lastOrder.length === items.length) {
+      let attempts = 0;
+      while (
+        attempts < 20 &&
+        (shuffled[0].id === lastOrder[0] ||
+          shuffled.every((q, idx) => q.id === lastOrder[idx]))
+      ) {
+        shuffled = shuffle(items);
+        attempts += 1;
+      }
+      // Garantia final de primeira pergunta diferente
+      if (shuffled[0].id === lastOrder[0]) {
+        const swapIdx = 1 + Math.floor(Math.random() * (shuffled.length - 1));
+        [shuffled[0], shuffled[swapIdx]] = [shuffled[swapIdx], shuffled[0]];
+      }
+    }
+    return shuffled;
+  }
+
+  function shuffleOptionsAvoidingLast(options, lastCorrectIdx) {
+    let shuffled = shuffle(options);
+    if (options.length > 1 && typeof lastCorrectIdx === "number") {
+      let attempts = 0;
+      while (attempts < 15 && shuffled.findIndex((o) => o.correct) === lastCorrectIdx) {
+        shuffled = shuffle(options);
+        attempts += 1;
+      }
+      // Garantia final de posição diferente para a opção correta
+      const currCorrectIdx = shuffled.findIndex((o) => o.correct);
+      if (currCorrectIdx === lastCorrectIdx) {
+        const otherIndices = shuffled
+          .map((_, idx) => idx)
+          .filter((idx) => idx !== currCorrectIdx);
+        const swapIdx = otherIndices[Math.floor(Math.random() * otherIndices.length)];
+        [shuffled[currCorrectIdx], shuffled[swapIdx]] = [shuffled[swapIdx], shuffled[currCorrectIdx]];
+      }
+    }
+    return shuffled;
+  }
+
+  function prepareShuffledRound() {
+    const last = loadLastShuffle();
+    const lastOrder = last && Array.isArray(last.order) ? last.order : null;
+    const lastCorrectPos = last && last.correctPos ? last.correctPos : {};
+
+    const orderedQuestions = shuffleQuestionsAvoidingLast(QUIZ_DATA, lastOrder);
+    const nextCorrectPos = {};
+
+    const prepared = orderedQuestions.map((item) => {
+      const shuffledOptions = shuffleOptionsAvoidingLast(item.options, lastCorrectPos[item.id]);
+      nextCorrectPos[item.id] = shuffledOptions.findIndex((o) => o.correct);
+      return {
+        ...item,
+        shuffledOptions
+      };
+    });
+
+    saveLastShuffle({
+      order: prepared.map((q) => q.id),
+      correctPos: nextCorrectPos
+    });
+
+    return prepared;
+  }
+
   function startQuiz() {
+    state.questions = prepareShuffledRound();
     state.currentIndex = 0;
     state.hits = 0;
     state.misses = 0;
@@ -206,9 +293,9 @@
   }
 
   function renderQuestion() {
-    const item = QUIZ_DATA[state.currentIndex];
+    const item = state.questions[state.currentIndex];
     const num = state.currentIndex + 1;
-    const total = QUIZ_DATA.length;
+    const total = state.questions.length;
 
     els.questionCounter.textContent = `Pergunta ${num} de ${total}`;
     els.progressDots.setAttribute("aria-valuenow", String(num));
@@ -218,8 +305,8 @@
     els.questionIllustration.innerHTML = TAROT_SVGS[item.illustration] || TAROT_SVGS.botanicals;
     els.questionText.textContent = item.question;
 
-    // Embaralha as 3 opções baseadas no PDF
-    state.currentOptions = shuffle(item.options);
+    // Usa as 3 opções já embaralhadas com posição da correta diferente da rodada anterior
+    state.currentOptions = item.shuffledOptions;
     els.optionsList.innerHTML = "";
 
     state.currentOptions.forEach((opt, idx) => {
@@ -237,8 +324,8 @@
   }
 
   function handleAnswer(selectedOption) {
-    const item = QUIZ_DATA[state.currentIndex];
-    const correctOption = item.options.find((o) => o.correct);
+    const item = state.questions[state.currentIndex];
+    const correctOption = item.shuffledOptions.find((o) => o.correct);
     const isCorrect = Boolean(selectedOption.correct);
 
     if (isCorrect) {
@@ -262,7 +349,7 @@
 
   function renderAnswerCard(item, isCorrect, correctText) {
     const num = state.currentIndex + 1;
-    const total = QUIZ_DATA.length;
+    const total = state.questions.length;
 
     els.answerCounter.textContent = `Resposta ${num} de ${total}`;
     updateScoreDisplays();
@@ -320,7 +407,7 @@
   }
 
   function handleNext() {
-    if (state.currentIndex + 1 < QUIZ_DATA.length) {
+    if (state.currentIndex + 1 < state.questions.length) {
       state.currentIndex += 1;
       renderQuestion();
       showScreen("question");
@@ -331,7 +418,7 @@
   }
 
   function renderResult() {
-    const total = QUIZ_DATA.length;
+    const total = state.questions.length;
     els.finalHits.textContent = String(state.hits);
     els.finalMisses.textContent = String(state.misses);
 
