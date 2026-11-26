@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Quiz ECA Digital — O que muda pra você?</title>
+  <meta name="description" content="Quiz interativo sobre o ECA Digital: descubra o que muda pra você nas redes sociais, jogos e aplicativos. OBECA e Intervozes." />
+  <meta name="theme-color" content="#5B4490" />
+
+  <!-- Tipografia fiel às artes do PDF -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Lora:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Fundo decorativo geométrico inspirado nas bordas externas das cartas do PDF -->
+  <div class="bg-decor" aria-hidden="true">
+    <div class="bg-wedge bg-wedge-left"></div>
+    <div class="bg-wedge bg-wedge-right"></div>
+    <div class="bg-tab bg-tab-left"></div>
+    <div class="bg-tab bg-tab-right"></div>
+  </div>
+
+  <main class="app-shell">
+    <!-- ==================== TELA 1: CAPA / INÍCIO ==================== -->
+    <section id="screen-start" class="screen active" aria-labelledby="start-title">
+      <article class="tarot-card tarot-card-cream">
+        <!-- Bolinhas celestiais nas bordas (identidade do PDF) -->
+        <span class="edge-orb orb-tl-1" aria-hidden="true"></span>
+        <span class="edge-orb orb-tl-2" aria-hidden="true"></span>
+        <span class="edge-orb orb-tr-1" aria-hidden="true"></span>
+        <span class="edge-orb orb-tr-2" aria-hidden="true"></span>
+        <span class="edge-orb orb-mid-l" aria-hidden="true"></span>
+        <span class="edge-orb orb-mid-r" aria-hidden="true"></span>
+
+        <div class="card-top start-top">
+          <!-- Estrelas decorativas -->
+          <svg class="sparkle sp-big-left" viewBox="0 0 60 70" fill="none" aria-hidden="true">
+            <path d="M30 4 L36 26 L56 20 L40 36 L48 58 L30 44 L14 60 L22 38 L6 30 L25 27 Z" fill="#FAF054" stroke="#251C4D" stroke-width="2.2" stroke-linejoin="round"/>
+          </svg>
+          <svg class="sparkle sp-right-1" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+            <path d="M18 2 L22 14 L34 18 L22 22 L18 34 L14 22 L2 18 L14 14 Z" fill="#FAF054" stroke="#251C4D" stroke-width="2" stroke-linejoin="round"/>
+          </svg>
+          <svg class="sparkle sp-right-2" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 2 L15 9 L22 12 L15 15 L12 22 L9 15 L2 12 L9 9 Z" fill="#FAF054" stroke="#251C4D" stroke-width="1.8" stroke-linejoin="round"/>
+          </svg>
+          <svg class="sparkle sp-left-small" viewBox="0 0 26 26" fill="none" aria-hidden="true">
+            <path d="M13 2 L16 10 L24 13 L16 16 L13 24 L10 16 L2 13 L10 10 Z" fill="#FAF054" stroke="#251C4D" stroke-width="1.8" stroke-linejoin="round"/>
+          </svg>
+
+          <!-- Emblema do arco com mão + celular -->
+          <div id="start-emblem" class="emblem-wrap"></div>
+
+          <!-- Logo principal -->
+          <h1 id="start-title" class="quiz-logo">
+            <span>QUIZ ECA</span>
+            <span>DIGITAL</span>
+          </h1>
+          <p class="quiz-subtitle">O que muda pra você?</p>
+
+          <!-- Ilustração botânica da capa -->
+          <div id="start-illustration" class="motif-wrap"></div>
+        </div>
+
+        <div class="card-bottom start-bottom">
+          <p class="start-lead">
+            10 perguntas para descobrir o que o ECA Digital prevê sobre supervisão parental, privacidade, jogos, anúncios e seus direitos na internet.
+          </p>
+          <button id="btn-start" type="button" class="btn-primary btn-cta">
+            <span>Vamos começar</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M5 12h14M13 5l7 7-7 7"/>
+            </svg>
+          </button>
+          <div id="start-logos" class="start-logos"></div>
+        </div>
+      </article>
+    </section>
+
+    <!-- ==================== TELA 2: PERGUNTA ==================== -->
+    <section id="screen-question" class="screen" aria-live="polite">
+      <header class="quiz-topbar">
+        <div class="topbar-meta">
+          <span id="question-counter" class="counter-pill">Pergunta 1 de 10</span>
+          <div class="live-score" aria-label="Placar parcial">
+            <span class="score-chip chip-hit" id="live-hits">✓ 0</span>
+            <span class="score-chip chip-miss" id="live-misses">✕ 0</span>
+          </div>
+        </div>
+        <div id="progress-dots" class="progress-dots" role="progressbar" aria-valuemin="1" aria-valuemax="10" aria-valuenow="1"></div>
+      </header>
+
+      <article class="tarot-card tarot-card-cream question-card">
+        <span class="edge-orb orb-tl-1" aria-hidden="true"></span>
+        <span class="edge-orb orb-tr-2" aria-hidden="true"></span>
+        <span class="edge-orb orb-mid-l" aria-hidden="true"></span>
+        <span class="edge-orb orb-mid-r" aria-hidden="true"></span>
+
+        <div class="card-top question-top">
+          <!-- Decoração sutil de estrelas -->
+          <svg class="sparkle q-sp-left" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+            <path d="M16 2 L19.5 12.5 L30 16 L19.5 19.5 L16 30 L12.5 19.5 L2 16 L12.5 12.5 Z" fill="#FAF054" stroke="#251C4D" stroke-width="2" stroke-linejoin="round"/>
+          </svg>
+          <svg class="sparkle q-sp-right" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+            <path d="M14 2 L17 11 L26 14 L17 17 L14 26 L11 17 L2 14 L11 11 Z" fill="#FAF054" stroke="#251C4D" stroke-width="1.9" stroke-linejoin="round"/>
+          </svg>
+
+          <div class="question-brand-row">
+            <div id="question-emblem" class="emblem-mini"></div>
+            <div class="mini-brand-text">
+              <div class="quiz-logo-mini">QUIZ ECA DIGITAL</div>
+              <div class="quiz-subtitle-mini">O que muda pra você?</div>
+            </div>
+          </div>
+
+          <div id="question-illustration" class="motif-wrap question-motif"></div>
+        </div>
+
+        <div class="card-bottom question-banner">
+          <h2 id="question-text" class="question-title"></h2>
+        </div>
+      </article>
+
+      <div class="options-block">
+        <p class="options-hint">Escolha a resposta correta:</p>
+        <div id="options-list" class="options-list" role="group" aria-label="Opções de resposta"></div>
+      </div>
+    </section>
+
+    <!-- ==================== TELA 3: RESPOSTA (VERSO ROSA DA CARTA) ==================== -->
+    <section id="screen-answer" class="screen" aria-live="polite">
+      <header class="quiz-topbar">
+        <div class="topbar-meta">
+          <span id="answer-counter" class="counter-pill">Resposta 1 de 10</span>
+          <div class="live-score">
+            <span class="score-chip chip-hit" id="answer-live-hits">✓ 0</span>
+            <span class="score-chip chip-miss" id="answer-live-misses">✕ 0</span>
+          </div>
+        </div>
+        <div id="answer-progress-dots" class="progress-dots" aria-hidden="true"></div>
+      </header>
+
+      <article class="tarot-card tarot-card-pink answer-card">
+        <!-- Pilares roxos listrados laterais (iguais às páginas pares do PDF) -->
+        <div class="pillar pillar-left" aria-hidden="true"></div>
+        <div class="pillar pillar-right" aria-hidden="true"></div>
+
+        <!-- Bolinhas superiores/inferiores -->
+        <span class="edge-orb orb-ans-tl" aria-hidden="true"></span>
+        <span class="edge-orb orb-ans-tr" aria-hidden="true"></span>
+        <span class="edge-orb orb-ans-bl" aria-hidden="true"></span>
+        <span class="edge-orb orb-ans-br" aria-hidden="true"></span>
+
+        <div class="answer-inner">
+          <!-- Arte do topo (meio-sol coral com raios + estrelas, ou 4 estrelas na p. 18) -->
+          <div id="answer-header-art" class="answer-header-art" aria-hidden="true"></div>
+
+          <!-- Feedback se acertou ou errou -->
+          <div id="feedback-banner" class="feedback-banner"></div>
+
+          <!-- Resposta rápida (texto fiel do PDF) -->
+          <div id="quick-answer-body" class="quick-answer-body"></div>
+
+          <!-- Quadro de artigos e informações adicionais (texto fiel do PDF) -->
+          <div id="legal-box" class="legal-box"></div>
+
+          <!-- Logos OBECA e Intervozes -->
+          <div id="answer-logos"></div>
+        </div>
+      </article>
+
+      <div class="answer-actions">
+        <button id="btn-next" type="button" class="btn-primary btn-cta">
+          <span id="btn-next-label">Próxima pergunta</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M5 12h14M13 5l7 7-7 7"/>
+          </svg>
+        </button>
+      </div>
+    </section>
+
+    <!-- ==================== TELA 4: RESULTADO FINAL ==================== -->
+    <section id="screen-result" class="screen" aria-labelledby="result-heading">
+      <article class="tarot-card tarot-card-cream result-card">
+        <span class="edge-orb orb-tl-1" aria-hidden="true"></span>
+        <span class="edge-orb orb-tr-2" aria-hidden="true"></span>
+        <span class="edge-orb orb-mid-l" aria-hidden="true"></span>
+        <span class="edge-orb orb-mid-r" aria-hidden="true"></span>
+
+        <div class="card-top result-top">
+          <div id="result-emblem" class="emblem-wrap emblem-result"></div>
+          <div class="quiz-logo result-logo">
+            <span>QUIZ ECA</span>
+            <span>DIGITAL</span>
+          </div>
+          <p class="quiz-subtitle">Seu resultado</p>
+
+          <h2 id="result-heading" class="result-headline"></h2>
+          <p id="result-summary" class="result-summary"></p>
+
+          <!-- Placar Acertos e Erros -->
+          <div class="score-grid">
+            <div class="score-box score-box-hit">
+              <span class="score-number" id="final-hits">0</span>
+              <span class="score-label">Acertos</span>
+            </div>
+            <div class="score-box score-box-miss">
+              <span class="score-number" id="final-misses">0</span>
+              <span class="score-label">Erros</span>
+            </div>
+          </div>
+
+          <div id="result-dots" class="result-dots" aria-label="Resumo por pergunta"></div>
+        </div>
+
+        <div class="card-bottom result-bottom">
+          <h3 class="share-title">Compartilhe seu resultado nas redes</h3>
+
+          <button id="btn-share-native" type="button" class="btn-primary btn-cta">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
+              <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+            </svg>
+            <span>Compartilhar resultado</span>
+          </button>
+
+          <div class="share-grid">
+            <button id="btn-share-whatsapp" type="button" class="btn-social btn-whatsapp">
+              <span>WhatsApp</span>
+            </button>
+            <button id="btn-share-x" type="button" class="btn-social btn-x">
+              <span>X / Twitter</span>
+            </button>
+            <button id="btn-share-copy" type="button" class="btn-social btn-copy">
+              <span>Copiar texto</span>
+            </button>
+            <button id="btn-share-image" type="button" class="btn-social btn-download">
+              <span>Baixar card</span>
+            </button>
+          </div>
+
+          <button id="btn-restart" type="button" class="btn-secondary">
+            Jogar novamente
+          </button>
+
+          <div id="result-logos" class="start-logos"></div>
+        </div>
+      </article>
+
+      <!-- Revisão recolhível das 10 perguntas -->
+      <details class="review-panel">
+        <summary class="review-toggle">
+          <span>Rever todas as perguntas e respostas do ECA Digital</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </summary>
+        <div id="review-list" class="review-list"></div>
+      </details>
+    </section>
+  </main>
+
+  <!-- Toast de confirmação -->
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <!-- Canvas oculto para gerar a imagem compartilhável 1080x1920 -->
+  <canvas id="share-canvas" width="1080" height="1920" hidden></canvas>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
